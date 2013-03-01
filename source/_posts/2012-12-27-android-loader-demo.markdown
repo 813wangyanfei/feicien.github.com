@@ -3,7 +3,7 @@ layout: post
 title: "Android使用Loader加载数据"
 date: 2012-12-27 10:49
 comments: true
-categories: 
+categories: Android
 ---
 
 
@@ -40,11 +40,3 @@ args 需要传递的参数。比如在demo中选择不通的省份，加载相�
 
 
 callback 回调接口，该接口中，有3个方法需要我们实现。分别是onCreateLoader(),onLoaderFinished(),onLoaderReset(),系统初始化Loader后，会调用首先调用onCreateLoader()
-
-
-
-&nbsp;
-
-
-
-&nbsp;
