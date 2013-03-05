@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Android使用Loader加载数据 - feicien的技术博客</title>
+  <meta name="author" content="feicien">
+
+  
+  <meta name="description" content="从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。 这是一个省、市、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://feicien.github.com/blog/2012/12/27/android-loader-demo/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="feicien的技术博客" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36433977-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">feicien的技术博客</a></h1>
+  
+    <h2>个人博客|Android开发</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:feicien.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Android使用Loader加载数据</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-27T10:49:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。</p>
+
+<p>这是一个省、市、县三级联动的Demo。</p>
+
+<p>Loader一般是配合ContentProvider一起使用的。</p>
+
+<p>如果你有Java Web的编程经验，你可以把ContentProvider看成DAO(数据访问层)，你提供一个Uri,它给你返回一个Cursor(可以把Cursor理解成一个装了很多数据的集合，类似JDBC中ResultSet).至于数据是放在文件中、数据库中、还是互联网上，你不用关心。</p>
+
+<p>在Activity的onCreate()方法中调用</p>
+
+<p>getLoaderManager.initLoader(int id,Bundle args,LoaderCallbacks&lt;Cursor&gt; callback)便可以初始化一个Loader.</p>
+
+<p>参数说明：一个loader有一个id,如果id相同，便认为是同一个loader.在一个activity中可以创建多个Loader.在demo中，我创建了3个Loader,分别用来加载省份、城市、县的数据。这三个Loader就是用不同的id来标示的。</p>
+
+<p>args 需要传递的参数。比如在demo中选择不通的省份，加载相应城市，我们需要把省份的code,传递到加载城市的Loader中。</p>
+
+<p>callback 回调接口，该接口中，有3个方法需要我们实现。分别是onCreateLoader(),onLoaderFinished(),onLoaderReset(),系统初始化Loader后，会调用首先调用onCreateLoader()</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">feicien</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-27T10:49:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+  	<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1359511509981120" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=0" async=""></script>
+<!-- UY END -->
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/22/weixin-push-message/" title="Previous Post: JAVA实现微信公众账户主动群发功能">&laquo; JAVA实现微信公众账户主动群发功能</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/02/26/start-use-octopress/" title="Next Post: start use octopress">start use octopress &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/26/start-use-octopress/">start use octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/27/android-loader-demo/">Android使用Loader加载数据</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/22/weixin-push-message/">JAVA实现微信公众账户主动群发功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/19/weixin-java-api/">JAVA实现微信公众账号自定义消息回复</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/27/android-push-gcm/">Android服务器推送之GCM</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/feicien">@feicien</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'feicien',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - feicien -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

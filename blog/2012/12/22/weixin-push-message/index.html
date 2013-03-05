@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>feicien的技术博客</title>
+  <title>JAVA实现微信公众账户主动群发功能 - feicien的技术博客</title>
   <meta name="author" content="feicien">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="在上一篇博客中介绍了JAVA实现微信公众账号的自定义消息回复，发到一个技术群中后，有网友问如何实现消息的主动推送？是的，现在微信的公共帐号官方api里并没有提供主动推送功能。 分析：既然微信公众平台上可以查询用户列表，可以给用户发送消息，就可以用程序模拟登录，获取到cookie和用户列表， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://feicien.github.com/">
+  <link rel="canonical" href="http://feicien.github.com/blog/2012/12/22/weixin-push-message/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -72,103 +71,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/02/26/start-use-octopress/">Start Use Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-26T09:08:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/27/android-loader-demo/">Android使用Loader加载数据</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-27T10:49:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。</p>
-
-<p>这是一个省、市、县三级联动的Demo。</p>
-
-<p>Loader一般是配合ContentProvider一起使用的。</p>
-
-<p>如果你有Java Web的编程经验，你可以把ContentProvider看成DAO(数据访问层)，你提供一个Uri,它给你返回一个Cursor(可以把Cursor理解成一个装了很多数据的集合，类似JDBC中ResultSet).至于数据是放在文件中、数据库中、还是互联网上，你不用关心。</p>
-
-<p>在Activity的onCreate()方法中调用</p>
-
-<p>getLoaderManager.initLoader(int id,Bundle args,LoaderCallbacks&lt;Cursor&gt; callback)便可以初始化一个Loader.</p>
-
-<p>参数说明：一个loader有一个id,如果id相同，便认为是同一个loader.在一个activity中可以创建多个Loader.在demo中，我创建了3个Loader,分别用来加载省份、城市、县的数据。这三个Loader就是用不同的id来标示的。</p>
-
-<p>args 需要传递的参数。比如在demo中选择不通的省份，加载相应城市，我们需要把省份的code,传递到加载城市的Loader中。</p>
-
-<p>callback 回调接口，该接口中，有3个方法需要我们实现。分别是onCreateLoader(),onLoaderFinished(),onLoaderReset(),系统初始化Loader后，会调用首先调用onCreateLoader()</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/22/weixin-push-message/">JAVA实现微信公众账户主动群发功能</a></h1>
+      <h1 class="entry-title">JAVA实现微信公众账户主动群发功能</h1>
     
     
       <p class="meta">
@@ -191,7 +99,7 @@
   </header>
 
 
-  <div class="entry-content"><p>在上一篇博客中介绍了JAVA实现微信公众账号的自定义消息回复，发到一个技术群中后，有网友问如何实现消息的主动推送？是的，现在微信的公共帐号官方api里并没有提供主动推送功能。</p>
+<div class="entry-content"><p>在上一篇博客中介绍了JAVA实现微信公众账号的自定义消息回复，发到一个技术群中后，有网友问如何实现消息的主动推送？是的，现在微信的公共帐号官方api里并没有提供主动推送功能。</p>
 
 <p><strong>分析：</strong>既然微信公众平台上可以查询用户列表，可以给用户发送消息，就可以用程序模拟登录，获取到cookie和用户列表，然后主动群发功能，这样还可以解决每天群发的限制，不过这样是有风险的，可能会导致腾讯的封号，所以不要轻易使用。</p>
 
@@ -312,94 +220,16 @@ groupid:分组id 0:未分组 1：黑名单 2：星标好友 如果你自己创�
 <p><strong>结束语：</strong>SendHttpRequestter 这个类里面有个人信息，源码就不提供了，里面有2个方法。
 一个获取cookie的方法，一个发送post请求的方法，网上都可以找到的。</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/19/weixin-java-api/">JAVA实现微信公众账号自定义消息回复</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">feicien</span></span>
 
-<time datetime="2012-12-19T12:09:00+08:00" pubdate data-updated="true">Dec 19<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近有没有在玩微信公众账号？很多公众账号有自动回复功能，比如爱范儿的appsolution发送Android或者IOS,它就会想你推荐好玩的app.</p>
-
-<p>微信对公众账号提供了api接口来自定义回复介绍到的消息，并且提供了PHP的demo.这里我使用JAVA来实现接口的调用。</p>
-
-<h3>能够实现本demo中描述的功能，你需要满足的下面的条件：</h3>
-
-<ol>
-<li>有一个微信公众账号</li>
-<li>有能够运行在公网上的服务器（推荐使用新浪的SAE）</li>
-<li>了解最基本的JAVA EE编程（会编写servlet）</li>
-</ol>
-
-
-<h3>(一)注册微信公众账号</h3>
-
-<p>微信公众账号注册地址：<a href="http://mp.weixin.qq.com">http://mp.weixin.qq.com</a>。</p>
-
-<p>公众账号需要与你的QQ号进行绑定。并且该QQ没有与其它的微信号绑定过（当然你可以先解除与其它微信的绑定）</p>
-
-<h3>(二)设置公众平台接口信息</h3>
-
-<p>注册成功后，进入微信公众账号管理界面，点击设置-&gt;自定义回复-&gt;前往设置。填写相关信息，其中需要注意的是URL和Token. 如果你随便填写URL的话，会提示下面的信息：你的服务器没有正确响应Token验证，请阅读消息接口使用指南。如图所示：</p>
-
-<p><img src="/images/blog/2012/12/QQ20121219-1.png" alt="解析xml" /></p>
-
-<p>这也是为什么要求“有能够运行在公网上的服务器”。本文以新浪的SAE作为服务器环境（好消息，SAE已经开放JAVA应用，不需要满世界找邀请码了），在SAE上创建一个JAVA应用，并上传已经写好的JAVA WEB应用war包，该应用中只有一个Servlet.</p>
-
-<p>其中doGet方法如图所示</p>
-
-<p><img src="/images/blog/2012/12/QQ20121219-14.png" alt="doget" /></p>
-
-<p>这里只是简单的把接收到的echostr字符串原样的返回回去了。这样写是为了能够先通过微信服务器的验证。在SAE上部署好应用后，在回到微信公众账号设置界面，URL添加该servlet的访问地址，token随便填写一个字符串，点击提交。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/19/weixin-java-api/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/27/android-push-gcm/">Android服务器推送之GCM</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -411,58 +241,54 @@ groupid:分组id 0:未分组 1：黑名单 2：星标好友 如果你自己创�
   
 
 
-<time datetime="2012-11-27T11:56:00+08:00" pubdate data-updated="true">Nov 27<span>th</span>, 2012</time>
-        
-      </p>
+<time datetime="2012-12-22T13:52:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>Java</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>GCM(Google Cloud Message for Android)是Google发布的Android服务器推送（push）技术。之前的C2DM(Android Cloud to Device Messaging)已与2012年6月26日被正式弃用，使用GCM,需要申请开通Google apis,Google apis包括了所有Google服务的api,比如Google Map、Google+、Analytics、YouTube等等，申请地址为：
-<a href="https://code.google.com/apis/console">Google API 网站</a></p>
-
-<h3>GCM有以下特点：</h3>
-
-<ol>
-<li>可以使用第三方应用服务器向Android应用推送消息</li>
-<li>GCM不保证发送的消息的顺序，也不保证消息一定能够推送到手机（恩，谁也不能保证100%）</li>
-<li>Android应用不需要运行就可以接收消息（是的，你没有看错，因为gcm被集成到系统中了，目前一些第三方的推送是在后台运行一个service维持长连接，与这些第三方推送相比，GCM不额外的耗电）</li>
-<li>GCM只传递的数据（可以传递小于4kb的数据），对这些数据的处理可以全部由开发者控制（Google不对数据进行任何处理，仅仅转发一下而已）</li>
-<li>对于Android4.04以上的系统使用GCM没有任何限制（国行手机也可以使用，截止2013年02月04日，android4.0+的份额为42.6%，随着4.0+版本的提升，Android的推送不再成为一个问题 <a href="https://developer.android.com/about/dashboards/index.html">Android版本分布</a>），Android2.2以上的系统需要安装Google Play Store，Android2.2以下的系统不能够使用GCM</li>
-<li>对于Android3.0以前的系统，需要在设备上设置google账号</li>
-<li>gcm一次最多只能向1000部设备发送消息，没有提供向所有用户发送的接口（可能google认为向应用程序推送的消息都是与该用户相关的，如果你非要实现群发，一次发送1000个用户，多发送几次就行了）</li>
-</ol>
-
-
-<h3>GCM使用流程如下图所示：</h3>
-
-<p><img src="/images/blog/2011/11/gcm.png" alt="gcm使用流程图" /></p>
-
-<p><strong>App</strong>是运行在Android手机上的应用程序，<strong>GCM Server</strong>是Google的GCM服务器，<strong>Our Server</strong>是第三方应用服务器。具体流程如下：</p>
-
-<ol>
-<li><strong>App</strong>发送 <strong>SenderID</strong>到<strong>GCM Server</strong>注册接收推送信息(SendID是开发者在Google的网站开通GCM服务时，创建项目的项目号)。</li>
-<li><strong>GCM Server</strong> 向<strong>App</strong>返回RegId(RegId是GCM服务器通过一定算法生产的，可以唯一确定某一部手机上的某一个应用，这个RegId很重要)。</li>
-<li><strong>App</strong>向<strong>Our Server</strong>发送RegId(推送消息的时候要使用RegId，GCM服务器是使用RegId来确定某一部手机上的某一个应用接收消息的，所以第三方服务器需要保存它，需要注意的是RegId很长，比如可能有183位，存数据库时需要注意字段长度)</li>
-<li><strong>Our Server</strong>向<strong>GCM Server</strong>发送消息,传递appkey和RegId(appkey分为Oauth api key和simple api key)</li>
-<li><strong>GCM Server</strong>把消息推送给<strong>App</strong></li>
-</ol>
-
-
-<p>更多信息，请访问<a href="https://developer.android.com/guide/google/gcm/gs.html">Android开发网站</a>，上面有快速开发指导，客户端与服务端集成介绍，和Demo下载。</p>
+      <div class="sharing">
+  
+  
+  
+  
+  	<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
 </div>
-  
-  
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1359511509981120" charset="utf-8"></script>
+<!-- JiaThis Button END -->
 
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=0" async=""></script>
+<!-- UY END -->
 
-    </article>
   
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/19/weixin-java-api/" title="Previous Post: JAVA实现微信公众账号自定义消息回复">&laquo; JAVA实现微信公众账号自定义消息回复</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/12/27/android-loader-demo/" title="Next Post: Android使用Loader加载数据">Android使用Loader加载数据 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -495,7 +321,7 @@ groupid:分组id 0:未分组 1：黑名单 2：星标好友 如果你自己创�
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/feicien">@feicien</a> on GitHub
@@ -524,6 +350,7 @@ groupid:分组id 0:未分组 1：黑名单 2：星标好友 如果你自己创�
 
   
 </aside>
+
 
     </div>
   </div>

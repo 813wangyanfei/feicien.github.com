@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | feicien的技术博客]]></title>
+  <link href="http://feicien.github.com/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://feicien.github.com/"/>
+  <updated>2013-03-05T09:58:38+08:00</updated>
+  <id>http://feicien.github.com/</id>
+  <author>
+    <name><![CDATA[feicien]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Android使用Loader加载数据]]></title>
+    <link href="http://feicien.github.com/blog/2012/12/27/android-loader-demo/"/>
+    <updated>2012-12-27T10:49:00+08:00</updated>
+    <id>http://feicien.github.com/blog/2012/12/27/android-loader-demo</id>
+    <content type="html"><![CDATA[<p>从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。</p>
+
+<p>这是一个省、市、县三级联动的Demo。</p>
+
+<p>Loader一般是配合ContentProvider一起使用的。</p>
+
+<p>如果你有Java Web的编程经验，你可以把ContentProvider看成DAO(数据访问层)，你提供一个Uri,它给你返回一个Cursor(可以把Cursor理解成一个装了很多数据的集合，类似JDBC中ResultSet).至于数据是放在文件中、数据库中、还是互联网上，你不用关心。</p>
+
+<p>在Activity的onCreate()方法中调用</p>
+
+<p>getLoaderManager.initLoader(int id,Bundle args,LoaderCallbacks&lt;Cursor&gt; callback)便可以初始化一个Loader.</p>
+
+<p>参数说明：一个loader有一个id,如果id相同，便认为是同一个loader.在一个activity中可以创建多个Loader.在demo中，我创建了3个Loader,分别用来加载省份、城市、县的数据。这三个Loader就是用不同的id来标示的。</p>
+
+<p>args 需要传递的参数。比如在demo中选择不通的省份，加载相应城市，我们需要把省份的code,传递到加载城市的Loader中。</p>
+
+<p>callback 回调接口，该接口中，有3个方法需要我们实现。分别是onCreateLoader(),onLoaderFinished(),onLoaderReset(),系统初始化Loader后，会调用首先调用onCreateLoader()</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android服务器推送之GCM]]></title>
+    <link href="http://feicien.github.com/blog/2012/11/27/android-push-gcm/"/>
+    <updated>2012-11-27T11:56:00+08:00</updated>
+    <id>http://feicien.github.com/blog/2012/11/27/android-push-gcm</id>
+    <content type="html"><![CDATA[<p>GCM(Google Cloud Message for Android)是Google发布的Android服务器推送（push）技术。之前的C2DM(Android Cloud to Device Messaging)已与2012年6月26日被正式弃用，使用GCM,需要申请开通Google apis,Google apis包括了所有Google服务的api,比如Google Map、Google+、Analytics、YouTube等等，申请地址为：
+<a href="https://code.google.com/apis/console">Google API 网站</a></p>
+
+<h3>GCM有以下特点：</h3>
+
+<ol>
+<li>可以使用第三方应用服务器向Android应用推送消息</li>
+<li>GCM不保证发送的消息的顺序，也不保证消息一定能够推送到手机（恩，谁也不能保证100%）</li>
+<li>Android应用不需要运行就可以接收消息（是的，你没有看错，因为gcm被集成到系统中了，目前一些第三方的推送是在后台运行一个service维持长连接，与这些第三方推送相比，GCM不额外的耗电）</li>
+<li>GCM只传递的数据（可以传递小于4kb的数据），对这些数据的处理可以全部由开发者控制（Google不对数据进行任何处理，仅仅转发一下而已）</li>
+<li>对于Android4.04以上的系统使用GCM没有任何限制（国行手机也可以使用，截止2013年02月04日，android4.0+的份额为42.6%，随着4.0+版本的提升，Android的推送不再成为一个问题 <a href="https://developer.android.com/about/dashboards/index.html">Android版本分布</a>），Android2.2以上的系统需要安装Google Play Store，Android2.2以下的系统不能够使用GCM</li>
+<li>对于Android3.0以前的系统，需要在设备上设置google账号</li>
+<li>gcm一次最多只能向1000部设备发送消息，没有提供向所有用户发送的接口（可能google认为向应用程序推送的消息都是与该用户相关的，如果你非要实现群发，一次发送1000个用户，多发送几次就行了）</li>
+</ol>
+
+
+<h3>GCM使用流程如下图所示：</h3>
+
+<p><img src="/images/blog/2011/11/gcm.png" alt="gcm使用流程图" /></p>
+
+<p><strong>App</strong>是运行在Android手机上的应用程序，<strong>GCM Server</strong>是Google的GCM服务器，<strong>Our Server</strong>是第三方应用服务器。具体流程如下：</p>
+
+<ol>
+<li><strong>App</strong>发送 <strong>SenderID</strong>到<strong>GCM Server</strong>注册接收推送信息(SendID是开发者在Google的网站开通GCM服务时，创建项目的项目号)。</li>
+<li><strong>GCM Server</strong> 向<strong>App</strong>返回RegId(RegId是GCM服务器通过一定算法生产的，可以唯一确定某一部手机上的某一个应用，这个RegId很重要)。</li>
+<li><strong>App</strong>向<strong>Our Server</strong>发送RegId(推送消息的时候要使用RegId，GCM服务器是使用RegId来确定某一部手机上的某一个应用接收消息的，所以第三方服务器需要保存它，需要注意的是RegId很长，比如可能有183位，存数据库时需要注意字段长度)</li>
+<li><strong>Our Server</strong>向<strong>GCM Server</strong>发送消息,传递appkey和RegId(appkey分为Oauth api key和simple api key)</li>
+<li><strong>GCM Server</strong>把消息推送给<strong>App</strong></li>
+</ol>
+
+
+<p>更多信息，请访问<a href="https://developer.android.com/guide/google/gcm/gs.html">Android开发网站</a>，上面有快速开发指导，客户端与服务端集成介绍，和Demo下载。</p>
+]]></content>
+  </entry>
+  
+</feed>

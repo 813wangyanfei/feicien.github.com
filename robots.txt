@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://feicien.github.com/sitemap.xml 
