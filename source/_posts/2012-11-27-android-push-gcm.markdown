@@ -25,7 +25,7 @@ GCM(Google Cloud Message for Android)是Google发布的Android服务器推送（
 ###GCM使用流程如下图所示：
 
 
-![gcm使用流程图](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/11/QQ20121127-1-300x241.png) 
+![gcm使用流程图](/images/blog/2011/11/gcm.png) 
 
 **App**是运行在Android手机上的应用程序，**GCM Server**是Google的GCM服务器，**Our Server**是第三方应用服务器。具体流程如下：
 

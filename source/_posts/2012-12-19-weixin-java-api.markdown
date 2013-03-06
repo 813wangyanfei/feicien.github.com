@@ -39,7 +39,7 @@ categories: Java
 
 
 
-![解析xml](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-1.png)
+![解析xml](/images/blog/2012/12/QQ20121219-1.png)
 
 
 这也是为什么要求“有能够运行在公网上的服务器”。本文以新浪的SAE作为服务器环境（好消息，SAE已经开放JAVA应用，不需要满世界找邀请码了），在SAE上创建一个JAVA应用，并上传已经写好的JAVA WEB应用war包，该应用中只有一个Servlet.
@@ -50,7 +50,7 @@ categories: Java
 
 
 
-![doget](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-14.png)
+![doget](/images/blog/2012/12/QQ20121219-14.png)
 
 
 这里只是简单的把接收到的echostr字符串原样的返回回去了。这样写是为了能够先通过微信服务器的验证。在SAE上部署好应用后，在回到微信公众账号设置界面，URL添加该servlet的访问地址，token随便填写一个字符串，点击提交。
@@ -65,7 +65,7 @@ categories: Java
 
 
 
-![提交成功](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-13.png)
+![提交成功](/images/blog/2012/12/QQ20121219-13.png)
 
 
 
@@ -79,7 +79,7 @@ categories: Java
 
 
 
-<a href="http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-15.png"><img class="aligncenter size-full wp-image-105" title="QQ20121219-15" src="http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-15.png" alt="" width="764" height="621" /></a>
+![dopost](/images/blog/2012/12/QQ20121219-15.png)
 
 
 
@@ -334,27 +334,27 @@ doPost方法中主要实现3个功能：1、从输入流中获取到消息xml。
 
 
 
-![解析xml](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-16.png)
+![解析xml](/images/blog/2012/12/QQ20121219-16.png)
 
 
 1. 解析xml,把解析到的数据保存到HashMap中
 
-![解析xml](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-17.png)
+![解析xml](/images/blog/2012/12/QQ20121219-17.png)
 
 + 保存数据到数据库，如果你不想保存到数据库，这一步可以省略
 
 + 处理消息,不同类型的消息可以通过MsgType来识别
 
 
-![处理消息](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-18.png)
+![处理消息](/images/blog/2012/12/QQ20121219-18.png)
 
 + 处理文本消息，这里演示回应一个文本消息，实际的处理是你的具体业务决定的
 
-![处理文本信息](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-19.png)
+![处理文本信息](/images/blog/2012/12/QQ20121219-19.png)
 
 
 + 生成xml文件
 
-![生成xml](http://huicheng-wordpress.stor.sinaapp.com/uploads/2012/12/QQ20121219-20.png)
+![生成xml](/images/blog/2012/12/QQ20121219-20.png)
 
 **结束语**：解析与生成xml使用的是dom4j,如果你也使用它，需要添加相关jar包。另外，本人不提供源代码，因为相关的代码我都贴出来了。如果你不懂Java EE的相关编程，给你源代码，你还问我怎么运行呢。欢迎关注我的微博：[http://weibo.com/feicien](http://weibo.com/feicien)
