@@ -9,8 +9,8 @@
   <meta name="author" content="feicien">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。
+这是一个省、市、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,42 +80,6 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/02/26/start-use-octopress/">Start Use Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-26T09:08:00+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2012/12/27/android-loader-demo/">Android使用Loader加载数据</a></h1>
     
     
@@ -139,11 +103,11 @@
   </header>
 
 
-  <div class="entry-content"><p>从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。</p>
+  <div class="entry-content"><p>从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。
+这是一个省、市、县三级联动的Demo，如下图所示：
+<img src="/images/blog/2012/12/27/125009ohvajnpjhoqozhqs.png" alt="demo" /></p>
 
-<p>这是一个省、市、县三级联动的Demo。</p>
-
-<p>Loader一般是配合ContentProvider一起使用的。</p>
+<p>Loader一般是配合ContentProvider一起使用的,ContentProvider类似与Java Web开发中的dao层</p>
 
 <p>如果你有Java Web的编程经验，你可以把ContentProvider看成DAO(数据访问层)，你提供一个Uri,它给你返回一个Cursor(可以把Cursor理解成一个装了很多数据的集合，类似JDBC中ResultSet).至于数据是放在文件中、数据库中、还是互联网上，你不用关心。</p>
 
@@ -156,6 +120,8 @@
 <p>args 需要传递的参数。比如在demo中选择不通的省份，加载相应城市，我们需要把省份的code,传递到加载城市的Loader中。</p>
 
 <p>callback 回调接口，该接口中，有3个方法需要我们实现。分别是onCreateLoader(),onLoaderFinished(),onLoaderReset(),系统初始化Loader后，会调用首先调用onCreateLoader()</p>
+
+<p>Demo源码：<a href="http://github.com/feicien/StudyDemo/LoaderDemo">LoaderDemo</a></p>
 </div>
   
   
@@ -457,7 +423,838 @@ groupid:分组id 0:未分组 1：黑名单 2：星标好友 如果你自己创�
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/08/java-tomcat-jdbc-datasource/">Tomcat 配置JDBC数据源datasource</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-08T18:07:00+08:00" pubdate data-updated="true">May 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h4>1. 编辑Tomcat安装目录conf文件夹中server.xml,在</Host>标签前添加</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;Context  path="/chaoshi" 
+</span><span class='line'>　　　　　　docBase="chaoshi"
+</span><span class='line'>　　　　　　debug="5" 
+</span><span class='line'>　　　　　　reloadable="true" 
+</span><span class='line'>　　　　　　crossContext="true"   
+</span><span class='line'>　　　　　　workDir=""&gt;
+</span><span class='line'>             &lt;Resource  name="jdbc/mydatasource"
+</span><span class='line'>                        auth="Container"
+</span><span class='line'>　　　　　　　　　　　　　　type="javax.sql.DataSource"
+</span><span class='line'>                 　 　　 maxActive="100" 
+</span><span class='line'>　　　　　　　　　　　　　　maxIdle="30" 
+</span><span class='line'>　　　　　　　　　　　　　　maxWait="10000"
+</span><span class='line'>                  　　　 username="root" 
+</span><span class='line'>　　　　　　　　　　　　　　password="123456"
+</span><span class='line'>　　　　　　　　　　　　　　driverClassName="com.mysql.jdbc.Driver"
+</span><span class='line'>　　　　　　　　　　　　　　url="jdbc:mysql://localhost:3306/mydatabase"/&gt;
+</span><span class='line'>&lt;/Context&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>2. 在应用的WEB-INF目录下web.xml文件中添加如下配置</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;resource-ref&gt;
+</span><span class='line'>　　&lt;description&gt;DB Connection&lt;/description&gt;
+</span><span class='line'>　　&lt;res-ref-name&gt;jdbc/mydatasource&lt;/res-ref-name&gt;
+</span><span class='line'>　　&lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
+</span><span class='line'>　　&lt;res-auth&gt;Container&lt;/res-auth&gt;
+</span><span class='line'>&lt;/resource-ref&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3. 在JSP或Servlet或JavaBean中用如下Java代码获得数据库连接</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Context initial = new InitialContext(); 
+</span><span class='line'>//其中mysql为数据源jndi名称 
+</span><span class='line'>DataSource ds = (DataSource)initial.lookup("java:comp/env/jdbc/mydatasource");
+</span><span class='line'>Connection con=ds.getConnection();</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/26/ssh-from-tomcat-to-weblogic/">Struts2+Hibernate+Spring+Webservice 项目从Tomcat到WebLogic遇到问题的解决方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-26T20:41:00+08:00" pubdate data-updated="true">Apr 26<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>公司一个SSH+Webservice项目开发时是在Tomcat下运行的。却不能部署到WebLogic上。</p>
+
+<p>下面是遇到的问题和相应的解决办法</p>
+
+<h4>一、异常</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Could not load user defined filter in web.xml: org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.
+</span><span class='line'>ClassNotFoundException:org.apache.velocity.app.VelocityEngine</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>解决方法：添加2个jar包</strong></p>
+
+<ul>
+<li>velocity-tools-2.0.jar</li>
+<li>velocity-1.7.jar</li>
+</ul>
+
+
+<h4>二、异常</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[com.sun.xml.ws.policy.jaxws.BuilderHandler] getPolicySubjects 
+</span><span class='line'>严重: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy) 
+</span><span class='line'>[com.sun.xml.ws.policy.jaxws.PolicyWSDLParserExtension] finished 
+</span><span class='line'>严重: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy) 
+</span><span class='line'>[com.sun.xml.ws.policy.jaxws.PolicyWSDLParserExtension] finished 
+</span><span class='line'>严重: [failed to localize] WSP_1018_POLICY_EXCEPTION_WHILE_FINISHING_PARSING_WSDL() 
+</span><span class='line'>com.sun.xml.ws.policy.PolicyException: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy) 
+</span><span class='line'>at com.sun.xml.ws.policy.jaxws.BuilderHandler.getPolicies(BuilderHandler.java:93)</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>解决办法：删除以下5个jar包</strong></p>
+
+<ul>
+<li>webservices-extra-api.jar</li>
+<li>webservices-extra.jar</li>
+<li>webservices-rt.jar</li>
+<li>webservices-tools.jar</li>
+<li>wsdl4j-1.5.1.jar</li>
+</ul>
+
+
+<h4>三、ClassNotFoundException: org.hibernate.hql.ast.HqlToken(hibernate3 weblogic antrl 问题</h4>
+
+<p><strong>解决办法：在applicationContext.xml中的，设置hibernate.query.factory_class</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;property name="hibernateProperties"&gt;
+</span><span class='line'>&lt;pros&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;prop key="hibernate.query.factory_class"&gt;org.hibernate.hql.classic.ClassicQueryTranslatorFactory&lt;/prop&gt;
+</span><span class='line'>&lt;/pros&gt;
+</span><span class='line'>&lt;/property&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>四、日志问题：　</h4>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/20/start-hibernate4.1.2/">Hibernate4.1.2配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-20T16:08:00+08:00" pubdate data-updated="true">Apr 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>&lt;?xml version='1.0' encoding='utf-8'?&gt;
+</span><span class='line'>&lt;!DOCTYPE hibernate-configuration PUBLIC
+</span><span class='line'>        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+</span><span class='line'>        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;hibernate-configuration&gt;
+</span><span class='line'>    &lt;session-factory&gt;
+</span><span class='line'>        &lt;!-- 数据库的配置 --&gt;
+</span><span class='line'>        &lt;property name="hibernate.bytecode.use_reflection_optimizer"&gt;false&lt;/property&gt;
+</span><span class='line'>        &lt;property name="hibernate.connection.driver_class"&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+</span><span class='line'>        &lt;property name="hibernate.connection.url"&gt;jdbc:mysql://localhost:3306/hibernate&lt;/property&gt;
+</span><span class='line'>        &lt;property name="hibernate.connection.username"&gt;root&lt;/property&gt;
+</span><span class='line'>        &lt;property name="hibernate.connection.password"&gt;123456&lt;/property&gt;
+</span><span class='line'>        &lt;!-- SQL dialect 数据库方言，这里我们用MySQL --&gt;
+</span><span class='line'>        &lt;property name="hibernate.dialect"&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;
+</span><span class='line'>        &lt;!-- 设置show_sql为true表示让hibernate将生成sql语句在控制台打印出来 --&gt;
+</span><span class='line'>        &lt;property name="show_sql"&gt;true&lt;/property&gt;
+</span><span class='line'>        &lt;!-- Drop and re-create the database schema on startup 是否让hibernate自动为我们创建表 --&gt;
+</span><span class='line'>        &lt;property name="hbm2ddl.auto"&gt;update&lt;/property&gt;
+</span><span class='line'>        &lt;property name="javax.persistence.validation.mode"&gt;none&lt;/property&gt;
+</span><span class='line'>        &lt;mapping class="com.loveplusplus.bean.Category"/&gt;
+</span><span class='line'>        &lt;mapping class="com.loveplusplus.bean.Goods"/&gt;
+</span><span class='line'>    &lt;/session-factory&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;/hibernate-configuration&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/10/create-android4.0-avd/">创建Android4.0平板模拟器</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-10T18:36:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天让我们来创建一个Android4.0的平板电脑模拟器，体验一下它有哪些特性吧。</p>
+
+<p>过程和创建一般模拟器是一样的，如下图所示：</p>
+
+<p><img src="/images/blog/2012/04/10/avd.png" alt="avd" /></p>
+
+<ol>
+<li>输入模拟器的名称</li>
+<li>选择target android4.0.3</li>
+<li>设置SD卡的大小</li>
+<li>Skin 选择WXGA800</li>
+<li>Hardware中的最后一项 默认是1024，在这里我把它改为了512（或者256）。</li>
+</ol>
+
+
+<p>如果不进行修改，电脑配置比较低的话，是无法启动模拟器的。1024好像代表给模拟器分配1G内存。</p>
+
+<p>刚开始因为不了解这个情况，在Eclipse中，点击avd manager启动刚创建好的模拟器，无法启动，一定反应都没有。</p>
+
+<p>傻傻等了几分钟。</p>
+
+<p>后来在cmd命令行中启动，报了一个异常。google之，才找到原因</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/20/android-dashboard/">Android Dashboard</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-20T21:08:00+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Android Dashboard(仪表盘)，是一种Android UI设计模式，使用这种UI设计模式的应用可以把功能模块在同一个界面显示出来，目前（2013年03月11日更新），市场上已经很少见到这样的应用了，但在给政府做的项目中，使用这种设计的还比较多，因为这样的设计，可以更方便给客户演示功能。效果图如下：</p>
+
+<p><img src="/images/blog/2012/03/20/android_dashboard.png" alt="仪表盘" /></p>
+
+<p>目前网络上的教程，基本上是参考2011年的Google IO大会的官方应用的 <a href="http://code.google.com/p/iosched/">iosched</a>
+DashboardLayout.java类集成自ViewGroup</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class DashboardLayout extends ViewGroup {
+</span><span class='line'>
+</span><span class='line'>    private static final int UNEVEN_GRID_PENALTY_MULTIPLIER = 10;
+</span><span class='line'>
+</span><span class='line'>    private int mMaxChildWidth = 0;
+</span><span class='line'>    private int mMaxChildHeight = 0;
+</span><span class='line'>
+</span><span class='line'>    public DashboardLayout(Context context) {
+</span><span class='line'>        super(context, null);
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public DashboardLayout(Context context, AttributeSet attrs) {
+</span><span class='line'>        super(context, attrs, 0);
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public DashboardLayout(Context context, AttributeSet attrs, int defStyle) {
+</span><span class='line'>        super(context, attrs, defStyle);
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override
+</span><span class='line'>    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+</span><span class='line'>        mMaxChildWidth = 0;
+</span><span class='line'>        mMaxChildHeight = 0;
+</span><span class='line'>
+</span><span class='line'>        // Measure once to find the maximum child size.
+</span><span class='line'>
+</span><span class='line'>        int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
+</span><span class='line'>                MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST);
+</span><span class='line'>        int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
+</span><span class='line'>                MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST);
+</span><span class='line'>
+</span><span class='line'>        final int count = getChildCount();
+</span><span class='line'>        for (int i = 0; i &lt; count; i++) {
+</span><span class='line'>            final View child = getChildAt(i);
+</span><span class='line'>            if (child.getVisibility() == GONE) {
+</span><span class='line'>                continue;
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+</span><span class='line'>
+</span><span class='line'>            mMaxChildWidth = Math.max(mMaxChildWidth, child.getMeasuredWidth());
+</span><span class='line'>            mMaxChildHeight = Math.max(mMaxChildHeight, child.getMeasuredHeight());
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        // Measure again for each child to be exactly the same size.
+</span><span class='line'>
+</span><span class='line'>        childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
+</span><span class='line'>                mMaxChildWidth, MeasureSpec.EXACTLY);
+</span><span class='line'>        childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
+</span><span class='line'>                mMaxChildHeight, MeasureSpec.EXACTLY);
+</span><span class='line'>
+</span><span class='line'>        for (int i = 0; i &lt; count; i++) {
+</span><span class='line'>            final View child = getChildAt(i);
+</span><span class='line'>            if (child.getVisibility() == GONE) {
+</span><span class='line'>                continue;
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        setMeasuredDimension(
+</span><span class='line'>                resolveSize(mMaxChildWidth, widthMeasureSpec),
+</span><span class='line'>                resolveSize(mMaxChildHeight, heightMeasureSpec));
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override
+</span><span class='line'>    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+</span><span class='line'>        int width = r - l;
+</span><span class='line'>        int height = b - t;
+</span><span class='line'>
+</span><span class='line'>        final int count = getChildCount();
+</span><span class='line'>
+</span><span class='line'>        // Calculate the number of visible children.
+</span><span class='line'>        int visibleCount = 0;
+</span><span class='line'>        for (int i = 0; i &lt; count; i++) {
+</span><span class='line'>            final View child = getChildAt(i);
+</span><span class='line'>            if (child.getVisibility() == GONE) {
+</span><span class='line'>                continue;
+</span><span class='line'>            }
+</span><span class='line'>            ++visibleCount;
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        if (visibleCount == 0) {
+</span><span class='line'>            return;
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        // Calculate what number of rows and columns will optimize for even horizontal and
+</span><span class='line'>        // vertical whitespace between items. Start with a 1 x N grid, then try 2 x N, and so on.
+</span><span class='line'>        int bestSpaceDifference = Integer.MAX_VALUE;
+</span><span class='line'>        int spaceDifference;
+</span><span class='line'>
+</span><span class='line'>        // Horizontal and vertical space between items
+</span><span class='line'>        int hSpace = 0;
+</span><span class='line'>        int vSpace = 0;
+</span><span class='line'>
+</span><span class='line'>        int cols = 1;
+</span><span class='line'>        int rows;
+</span><span class='line'>
+</span><span class='line'>        while (true) {
+</span><span class='line'>            rows = (visibleCount - 1) / cols + 1;
+</span><span class='line'>
+</span><span class='line'>            hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
+</span><span class='line'>            vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+</span><span class='line'>
+</span><span class='line'>            spaceDifference = Math.abs(vSpace - hSpace);
+</span><span class='line'>            if (rows * cols != visibleCount) {
+</span><span class='line'>                spaceDifference *= UNEVEN_GRID_PENALTY_MULTIPLIER;
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            if (spaceDifference &lt; bestSpaceDifference) {
+</span><span class='line'>                // Found a better whitespace squareness/ratio
+</span><span class='line'>                bestSpaceDifference = spaceDifference;
+</span><span class='line'>
+</span><span class='line'>                // If we found a better whitespace squareness and there's only 1 row, this is
+</span><span class='line'>                // the best we can do.
+</span><span class='line'>                if (rows == 1) {
+</span><span class='line'>                    break;
+</span><span class='line'>                }
+</span><span class='line'>            } else {
+</span><span class='line'>                // This is a worse whitespace ratio, use the previous value of cols and exit.
+</span><span class='line'>                --cols;
+</span><span class='line'>                rows = (visibleCount - 1) / cols + 1;
+</span><span class='line'>                hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
+</span><span class='line'>                vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+</span><span class='line'>                break;
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            ++cols;
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        // Lay out children based on calculated best-fit number of rows and cols.
+</span><span class='line'>
+</span><span class='line'>        // If we chose a layout that has negative horizontal or vertical space, force it to zero.
+</span><span class='line'>        hSpace = Math.max(0, hSpace);
+</span><span class='line'>        vSpace = Math.max(0, vSpace);
+</span><span class='line'>
+</span><span class='line'>        // Re-use width/height variables to be child width/height.
+</span><span class='line'>        width = (width - hSpace * (cols + 1)) / cols;
+</span><span class='line'>        height = (height - vSpace * (rows + 1)) / rows;
+</span><span class='line'>
+</span><span class='line'>        int left, top;
+</span><span class='line'>        int col, row;
+</span><span class='line'>        int visibleIndex = 0;
+</span><span class='line'>        for (int i = 0; i &lt; count; i++) {
+</span><span class='line'>            final View child = getChildAt(i);
+</span><span class='line'>            if (child.getVisibility() == GONE) {
+</span><span class='line'>                continue;
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            row = visibleIndex / cols;
+</span><span class='line'>            col = visibleIndex % cols;
+</span><span class='line'>
+</span><span class='line'>            left = hSpace * (col + 1) + width * col;
+</span><span class='line'>            top = vSpace * (row + 1) + height * row;
+</span><span class='line'>
+</span><span class='line'>            child.layout(left, top,
+</span><span class='line'>                    (hSpace == 0 && col == cols - 1) ? r : (left + width),
+</span><span class='line'>                    (vSpace == 0 && row == rows - 1) ? b : (top + height));
+</span><span class='line'>            ++visibleIndex;
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/android-http-client/">Android Http Client</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T21:13:00+08:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>大部分Android应用程序联网都是通过HTTP来发送和接受数据的。Android有2个Http客户端：HttpURLConnection和Apache Http Client.它们都支持Https,流媒体的上传下载，配置连接超时，ipv6和连接池。</p>
+
+<p>那么在我们的程序中选择哪一个好呢？</p>
+
+<p>通过Android的官方博客：<a href="http://android-developers.blogspot.com/2011/09/androids-http-clients.html">blogspot博客，需要翻墙</a> 如果你的应用api版本2.3及以上HttpURLConnection是更好的选择。</p>
+
+<p>下面通过代码来演示HttpURLConnection的使用。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//获取html源代码
+</span><span class='line'>    public static String getHtml(String path) throws Exception {
+</span><span class='line'>        URL url=new URL(path);
+</span><span class='line'>        HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+</span><span class='line'>        
+</span><span class='line'>        conn.setConnectTimeout(5000);
+</span><span class='line'>        conn.setRequestMethod("GET");
+</span><span class='line'>        
+</span><span class='line'>        if(conn.getResponseCode()==200){
+</span><span class='line'>            InputStream is=conn.getInputStream();
+</span><span class='line'>            byte[] data=read(is);
+</span><span class='line'>            String html=new String(data,"UTF-8");
+</span><span class='line'>            return html;
+</span><span class='line'>        }
+</span><span class='line'>        return null;
+</span><span class='line'>    }
+</span><span class='line'>    </span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>//将输入流读到内存中
+</span><span class='line'>    public static byte[] read(InputStream is) throws IOException {
+</span><span class='line'>        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+</span><span class='line'>        
+</span><span class='line'>        byte[] buffer =new byte[1024];
+</span><span class='line'>        int len=0;
+</span><span class='line'>        while((len=is.read(buffer))!=-1){
+</span><span class='line'>            baos.write(buffer, 0, len);
+</span><span class='line'>        }
+</span><span class='line'>        is.close();
+</span><span class='line'>        return baos.toByteArray();
+</span><span class='line'>    }
+</span><span class='line'>    </span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -468,10 +1265,6 @@ groupid:分组id 0:未分组 1：黑名单 2：星标好友 如果你自己创�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/02/26/start-use-octopress/">start use octopress</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2012/12/27/android-loader-demo/">Android使用Loader加载数据</a>
@@ -487,6 +1280,10 @@ groupid:分组id 0:未分组 1：黑名单 2：星标好友 如果你自己创�
     
       <li class="post">
         <a href="/blog/2012/11/27/android-push-gcm/">Android服务器推送之GCM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/08/java-tomcat-jdbc-datasource/">Tomcat 配置JDBC数据源datasource</a>
       </li>
     
   </ul>

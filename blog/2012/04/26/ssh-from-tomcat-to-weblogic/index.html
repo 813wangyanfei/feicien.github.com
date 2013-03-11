@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Android使用Loader加载数据 - feicien的技术博客</title>
+  <title>Struts2+Hibernate+Spring+Webservice 项目从Tomcat到WebLogic遇到问题的解决方法 - feicien的技术博客</title>
   <meta name="author" content="feicien">
 
   
-  <meta name="description" content="从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。
-这是一个省、市、 &hellip;">
+  <meta name="description" content="公司一个SSH+Webservice项目开发时是在Tomcat下运行的。却不能部署到WebLogic上。 下面是遇到的问题和相应的解决办法 一、异常 1
+2
+Could not load user defined filter in web.xml: org.apache.struts2. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://feicien.github.com/blog/2012/12/27/android-loader-demo/">
+  <link rel="canonical" href="http://feicien.github.com/blog/2012/04/26/ssh-from-tomcat-to-weblogic/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,7 +78,7 @@
   
   <header>
     
-      <h1 class="entry-title">Android使用Loader加载数据</h1>
+      <h1 class="entry-title">Struts2+Hibernate+Spring+Webservice 项目从Tomcat到WebLogic遇到问题的解决方法</h1>
     
     
       <p class="meta">
@@ -93,32 +94,83 @@
   
 
 
-<time datetime="2012-12-27T10:49:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
+<time datetime="2012-04-26T20:41:00+08:00" pubdate data-updated="true">Apr 26<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。
-这是一个省、市、县三级联动的Demo，如下图所示：
-<img src="/images/blog/2012/12/27/125009ohvajnpjhoqozhqs.png" alt="demo" /></p>
+<div class="entry-content"><p>公司一个SSH+Webservice项目开发时是在Tomcat下运行的。却不能部署到WebLogic上。</p>
 
-<p>Loader一般是配合ContentProvider一起使用的,ContentProvider类似与Java Web开发中的dao层</p>
+<p>下面是遇到的问题和相应的解决办法</p>
 
-<p>如果你有Java Web的编程经验，你可以把ContentProvider看成DAO(数据访问层)，你提供一个Uri,它给你返回一个Cursor(可以把Cursor理解成一个装了很多数据的集合，类似JDBC中ResultSet).至于数据是放在文件中、数据库中、还是互联网上，你不用关心。</p>
+<h4>一、异常</h4>
 
-<p>在Activity的onCreate()方法中调用</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Could not load user defined filter in web.xml: org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.
+</span><span class='line'>ClassNotFoundException:org.apache.velocity.app.VelocityEngine</span></code></pre></td></tr></table></div></figure>
 
-<p>getLoaderManager.initLoader(int id,Bundle args,LoaderCallbacks&lt;Cursor&gt; callback)便可以初始化一个Loader.</p>
 
-<p>参数说明：一个loader有一个id,如果id相同，便认为是同一个loader.在一个activity中可以创建多个Loader.在demo中，我创建了3个Loader,分别用来加载省份、城市、县的数据。这三个Loader就是用不同的id来标示的。</p>
+<p><strong>解决方法：添加2个jar包</strong></p>
 
-<p>args 需要传递的参数。比如在demo中选择不通的省份，加载相应城市，我们需要把省份的code,传递到加载城市的Loader中。</p>
+<ul>
+<li>velocity-tools-2.0.jar</li>
+<li>velocity-1.7.jar</li>
+</ul>
 
-<p>callback 回调接口，该接口中，有3个方法需要我们实现。分别是onCreateLoader(),onLoaderFinished(),onLoaderReset(),系统初始化Loader后，会调用首先调用onCreateLoader()</p>
 
-<p>Demo源码：<a href="http://github.com/feicien/StudyDemo/LoaderDemo">LoaderDemo</a></p>
+<h4>二、异常</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[com.sun.xml.ws.policy.jaxws.BuilderHandler] getPolicySubjects 
+</span><span class='line'>严重: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy) 
+</span><span class='line'>[com.sun.xml.ws.policy.jaxws.PolicyWSDLParserExtension] finished 
+</span><span class='line'>严重: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy) 
+</span><span class='line'>[com.sun.xml.ws.policy.jaxws.PolicyWSDLParserExtension] finished 
+</span><span class='line'>严重: [failed to localize] WSP_1018_POLICY_EXCEPTION_WHILE_FINISHING_PARSING_WSDL() 
+</span><span class='line'>com.sun.xml.ws.policy.PolicyException: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy) 
+</span><span class='line'>at com.sun.xml.ws.policy.jaxws.BuilderHandler.getPolicies(BuilderHandler.java:93)</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>解决办法：删除以下5个jar包</strong></p>
+
+<ul>
+<li>webservices-extra-api.jar</li>
+<li>webservices-extra.jar</li>
+<li>webservices-rt.jar</li>
+<li>webservices-tools.jar</li>
+<li>wsdl4j-1.5.1.jar</li>
+</ul>
+
+
+<h4>三、ClassNotFoundException: org.hibernate.hql.ast.HqlToken(hibernate3 weblogic antrl 问题</h4>
+
+<p><strong>解决办法：在applicationContext.xml中的，设置hibernate.query.factory_class</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;property name="hibernateProperties"&gt;
+</span><span class='line'>&lt;pros&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;prop key="hibernate.query.factory_class"&gt;org.hibernate.hql.classic.ClassicQueryTranslatorFactory&lt;/prop&gt;
+</span><span class='line'>&lt;/pros&gt;
+</span><span class='line'>&lt;/property&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>四、日志问题：　</h4>
 </div>
 
 
@@ -141,12 +193,12 @@
   
 
 
-<time datetime="2012-12-27T10:49:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
+<time datetime="2012-04-26T20:41:00+08:00" pubdate data-updated="true">Apr 26<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/android/'>Android</a>
+    <a class='category' href='/blog/categories/java/'>Java</a>
   
 </span>
 
@@ -178,8 +230,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/12/22/weixin-push-message/" title="Previous Post: JAVA实现微信公众账户主动群发功能">&laquo; JAVA实现微信公众账户主动群发功能</a>
+        <a class="basic-alignment left" href="/blog/2012/04/20/start-hibernate4.1.2/" title="Previous Post: Hibernate4.1.2配置">&laquo; Hibernate4.1.2配置</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2012/05/08/java-tomcat-jdbc-datasource/" title="Next Post: Tomcat 配置JDBC数据源datasource">Tomcat 配置JDBC数据源datasource &raquo;</a>
       
     </p>
   </footer>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | feicien的技术博客]]></title>
   <link href="http://feicien.github.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://feicien.github.com/"/>
-  <updated>2013-03-05T09:58:38+08:00</updated>
+  <updated>2013-03-11T13:06:02+08:00</updated>
   <id>http://feicien.github.com/</id>
   <author>
     <name><![CDATA[feicien]]></name>
@@ -444,6 +444,169 @@ System.out.println(html);
 <p><img src="/images/blog/2012/12/QQ20121219-20.png" alt="生成xml" /></p>
 
 <p><strong>结束语</strong>：解析与生成xml使用的是dom4j,如果你也使用它，需要添加相关jar包。另外，本人不提供源代码，因为相关的代码我都贴出来了。如果你不懂Java EE的相关编程，给你源代码，你还问我怎么运行呢。欢迎关注我的微博：<a href="http://weibo.com/feicien">http://weibo.com/feicien</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tomcat 配置JDBC数据源datasource]]></title>
+    <link href="http://feicien.github.com/blog/2012/05/08/java-tomcat-jdbc-datasource/"/>
+    <updated>2012-05-08T18:07:00+08:00</updated>
+    <id>http://feicien.github.com/blog/2012/05/08/java-tomcat-jdbc-datasource</id>
+    <content type="html"><![CDATA[<h4>1. 编辑Tomcat安装目录conf文件夹中server.xml,在</Host>标签前添加</h4>
+
+<p>```
+<Context  path="/chaoshi"
+　　　　　　docBase="chaoshi"
+　　　　　　debug="5"
+　　　　　　reloadable="true"
+　　　　　　crossContext="true" 
+　　　　　　workDir=""></p>
+
+<pre><code>         &lt;Resource  name="jdbc/mydatasource"
+                    auth="Container"
+</code></pre>
+
+<p>　　　　　　　　　　　　　　type="javax.sql.DataSource"</p>
+
+<pre><code>             　 　　 maxActive="100" 
+</code></pre>
+
+<p>　　　　　　　　　　　　　　maxIdle="30"
+　　　　　　　　　　　　　　maxWait="10000"</p>
+
+<pre><code>              　　　 username="root" 
+</code></pre>
+
+<p>　　　　　　　　　　　　　　password="123456"
+　　　　　　　　　　　　　　driverClassName="com.mysql.jdbc.Driver"
+　　　　　　　　　　　　　　url="jdbc:mysql://localhost:3306/mydatabase"/>
+</Context>
+```</p>
+
+<h4>2. 在应用的WEB-INF目录下web.xml文件中添加如下配置</h4>
+
+<p><code>
+&lt;resource-ref&gt;
+　　&lt;description&gt;DB Connection&lt;/description&gt;
+　　&lt;res-ref-name&gt;jdbc/mydatasource&lt;/res-ref-name&gt;
+　　&lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
+　　&lt;res-auth&gt;Container&lt;/res-auth&gt;
+&lt;/resource-ref&gt;
+</code></p>
+
+<h4>3. 在JSP或Servlet或JavaBean中用如下Java代码获得数据库连接</h4>
+
+<p><code>
+Context initial = new InitialContext();
+//其中mysql为数据源jndi名称
+DataSource ds = (DataSource)initial.lookup("java:comp/env/jdbc/mydatasource");
+Connection con=ds.getConnection();
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Struts2+Hibernate+Spring+Webservice 项目从Tomcat到WebLogic遇到问题的解决方法]]></title>
+    <link href="http://feicien.github.com/blog/2012/04/26/ssh-from-tomcat-to-weblogic/"/>
+    <updated>2012-04-26T20:41:00+08:00</updated>
+    <id>http://feicien.github.com/blog/2012/04/26/ssh-from-tomcat-to-weblogic</id>
+    <content type="html"><![CDATA[<p>公司一个SSH+Webservice项目开发时是在Tomcat下运行的。却不能部署到WebLogic上。</p>
+
+<p>下面是遇到的问题和相应的解决办法</p>
+
+<h4>一、异常</h4>
+
+<p><code>
+Could not load user defined filter in web.xml: org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.
+ClassNotFoundException:org.apache.velocity.app.VelocityEngine
+</code>
+<strong>解决方法：添加2个jar包</strong></p>
+
+<ul>
+<li>velocity-tools-2.0.jar</li>
+<li>velocity-1.7.jar</li>
+</ul>
+
+
+<h4>二、异常</h4>
+
+<p><code>
+[com.sun.xml.ws.policy.jaxws.BuilderHandler] getPolicySubjects
+严重: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy)
+[com.sun.xml.ws.policy.jaxws.PolicyWSDLParserExtension] finished
+严重: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy)
+[com.sun.xml.ws.policy.jaxws.PolicyWSDLParserExtension] finished
+严重: [failed to localize] WSP_1018_POLICY_EXCEPTION_WHILE_FINISHING_PARSING_WSDL()
+com.sun.xml.ws.policy.PolicyException: [failed to localize] WSP_1014_POLICY_REFERENCE_DOES_NOT_EXIST(zip:D:/bea/weblogic1034/webdomain/servers/AdminServer/tmp/_WL_user/_appsdir_WebServicePro_dir/achpn5/war/WEB-INF/lib/webservices-rt.jar!/WEB-INF/wsdl/wsat.wsdl#Addressing_policy)
+at com.sun.xml.ws.policy.jaxws.BuilderHandler.getPolicies(BuilderHandler.java:93)
+</code></p>
+
+<p><strong>解决办法：删除以下5个jar包</strong></p>
+
+<ul>
+<li>webservices-extra-api.jar</li>
+<li>webservices-extra.jar</li>
+<li>webservices-rt.jar</li>
+<li>webservices-tools.jar</li>
+<li>wsdl4j-1.5.1.jar</li>
+</ul>
+
+
+<h4>三、ClassNotFoundException: org.hibernate.hql.ast.HqlToken(hibernate3 weblogic antrl 问题</h4>
+
+<p><strong>解决办法：在applicationContext.xml中的，设置hibernate.query.factory_class</strong></p>
+
+<p>```
+<property name="hibernateProperties">
+<pros></p>
+
+<p><prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>
+</pros>
+</property>
+```</p>
+
+<h4>四、日志问题：　</h4>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hibernate4.1.2配置]]></title>
+    <link href="http://feicien.github.com/blog/2012/04/20/start-hibernate4.1.2/"/>
+    <updated>2012-04-20T16:08:00+08:00</updated>
+    <id>http://feicien.github.com/blog/2012/04/20/start-hibernate4.1.2</id>
+    <content type="html"><![CDATA[<p>```</p>
+
+<p>&lt;?xml version='1.0' encoding='utf-8'?>
+&lt;!DOCTYPE hibernate-configuration PUBLIC</p>
+
+<pre><code>    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;
+</code></pre>
+
+<p><hibernate-configuration></p>
+
+<pre><code>&lt;session-factory&gt;
+    &lt;!-- 数据库的配置 --&gt;
+    &lt;property name="hibernate.bytecode.use_reflection_optimizer"&gt;false&lt;/property&gt;
+    &lt;property name="hibernate.connection.driver_class"&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+    &lt;property name="hibernate.connection.url"&gt;jdbc:mysql://localhost:3306/hibernate&lt;/property&gt;
+    &lt;property name="hibernate.connection.username"&gt;root&lt;/property&gt;
+    &lt;property name="hibernate.connection.password"&gt;123456&lt;/property&gt;
+    &lt;!-- SQL dialect 数据库方言，这里我们用MySQL --&gt;
+    &lt;property name="hibernate.dialect"&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;
+    &lt;!-- 设置show_sql为true表示让hibernate将生成sql语句在控制台打印出来 --&gt;
+    &lt;property name="show_sql"&gt;true&lt;/property&gt;
+    &lt;!-- Drop and re-create the database schema on startup 是否让hibernate自动为我们创建表 --&gt;
+    &lt;property name="hbm2ddl.auto"&gt;update&lt;/property&gt;
+    &lt;property name="javax.persistence.validation.mode"&gt;none&lt;/property&gt;
+    &lt;mapping class="com.loveplusplus.bean.Category"/&gt;
+    &lt;mapping class="com.loveplusplus.bean.Goods"/&gt;
+&lt;/session-factory&gt;
+</code></pre>
+
+<p></hibernate-configuration></p>
+
+<p>```</p>
 ]]></content>
   </entry>
   

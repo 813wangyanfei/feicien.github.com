@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | feicien的技术博客]]></title>
   <link href="http://feicien.github.com/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://feicien.github.com/"/>
-  <updated>2013-03-05T09:58:38+08:00</updated>
+  <updated>2013-03-11T13:06:02+08:00</updated>
   <id>http://feicien.github.com/</id>
   <author>
     <name><![CDATA[feicien]]></name>
@@ -18,11 +18,11 @@
     <link href="http://feicien.github.com/blog/2012/12/27/android-loader-demo/"/>
     <updated>2012-12-27T10:49:00+08:00</updated>
     <id>http://feicien.github.com/blog/2012/12/27/android-loader-demo</id>
-    <content type="html"><![CDATA[<p>从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。</p>
+    <content type="html"><![CDATA[<p>从android3.0开始，android引入了很多新的api,像fragment，Loader,ViewPager,ActionBar等。今天我通过一个小demo,讲解一下我在使用Loader的一些开发经验，抛砖引玉，激发大家开发Android4.0+应用的兴趣。
+这是一个省、市、县三级联动的Demo，如下图所示：
+<img src="/images/blog/2012/12/27/125009ohvajnpjhoqozhqs.png" alt="demo" /></p>
 
-<p>这是一个省、市、县三级联动的Demo。</p>
-
-<p>Loader一般是配合ContentProvider一起使用的。</p>
+<p>Loader一般是配合ContentProvider一起使用的,ContentProvider类似与Java Web开发中的dao层</p>
 
 <p>如果你有Java Web的编程经验，你可以把ContentProvider看成DAO(数据访问层)，你提供一个Uri,它给你返回一个Cursor(可以把Cursor理解成一个装了很多数据的集合，类似JDBC中ResultSet).至于数据是放在文件中、数据库中、还是互联网上，你不用关心。</p>
 
@@ -35,6 +35,8 @@
 <p>args 需要传递的参数。比如在demo中选择不通的省份，加载相应城市，我们需要把省份的code,传递到加载城市的Loader中。</p>
 
 <p>callback 回调接口，该接口中，有3个方法需要我们实现。分别是onCreateLoader(),onLoaderFinished(),onLoaderReset(),系统初始化Loader后，会调用首先调用onCreateLoader()</p>
+
+<p>Demo源码：<a href="http://github.com/feicien/StudyDemo/LoaderDemo">LoaderDemo</a></p>
 ]]></content>
   </entry>
   
@@ -75,6 +77,274 @@
 
 
 <p>更多信息，请访问<a href="https://developer.android.com/guide/google/gcm/gs.html">Android开发网站</a>，上面有快速开发指导，客户端与服务端集成介绍，和Demo下载。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[创建Android4.0平板模拟器]]></title>
+    <link href="http://feicien.github.com/blog/2012/04/10/create-android4.0-avd/"/>
+    <updated>2012-04-10T18:36:00+08:00</updated>
+    <id>http://feicien.github.com/blog/2012/04/10/create-android4.0-avd</id>
+    <content type="html"><![CDATA[<p>今天让我们来创建一个Android4.0的平板电脑模拟器，体验一下它有哪些特性吧。</p>
+
+<p>过程和创建一般模拟器是一样的，如下图所示：</p>
+
+<p><img src="/images/blog/2012/04/10/avd.png" alt="avd" /></p>
+
+<ol>
+<li>输入模拟器的名称</li>
+<li>选择target android4.0.3</li>
+<li>设置SD卡的大小</li>
+<li>Skin 选择WXGA800</li>
+<li>Hardware中的最后一项 默认是1024，在这里我把它改为了512（或者256）。</li>
+</ol>
+
+
+<p>如果不进行修改，电脑配置比较低的话，是无法启动模拟器的。1024好像代表给模拟器分配1G内存。</p>
+
+<p>刚开始因为不了解这个情况，在Eclipse中，点击avd manager启动刚创建好的模拟器，无法启动，一定反应都没有。</p>
+
+<p>傻傻等了几分钟。</p>
+
+<p>后来在cmd命令行中启动，报了一个异常。google之，才找到原因</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android Dashboard]]></title>
+    <link href="http://feicien.github.com/blog/2012/03/20/android-dashboard/"/>
+    <updated>2012-03-20T21:08:00+08:00</updated>
+    <id>http://feicien.github.com/blog/2012/03/20/android-dashboard</id>
+    <content type="html"><![CDATA[<p>Android Dashboard(仪表盘)，是一种Android UI设计模式，使用这种UI设计模式的应用可以把功能模块在同一个界面显示出来，目前（2013年03月11日更新），市场上已经很少见到这样的应用了，但在给政府做的项目中，使用这种设计的还比较多，因为这样的设计，可以更方便给客户演示功能。效果图如下：</p>
+
+<p><img src="/images/blog/2012/03/20/android_dashboard.png" alt="仪表盘" /></p>
+
+<p>目前网络上的教程，基本上是参考2011年的Google IO大会的官方应用的 <a href="http://code.google.com/p/iosched/">iosched</a>
+DashboardLayout.java类集成自ViewGroup</p>
+
+<p>```
+public class DashboardLayout extends ViewGroup {</p>
+
+<pre><code>private static final int UNEVEN_GRID_PENALTY_MULTIPLIER = 10;
+
+private int mMaxChildWidth = 0;
+private int mMaxChildHeight = 0;
+
+public DashboardLayout(Context context) {
+    super(context, null);
+}
+
+public DashboardLayout(Context context, AttributeSet attrs) {
+    super(context, attrs, 0);
+}
+
+public DashboardLayout(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+}
+
+@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    mMaxChildWidth = 0;
+    mMaxChildHeight = 0;
+
+    // Measure once to find the maximum child size.
+
+    int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
+            MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST);
+    int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
+            MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST);
+
+    final int count = getChildCount();
+    for (int i = 0; i &lt; count; i++) {
+        final View child = getChildAt(i);
+        if (child.getVisibility() == GONE) {
+            continue;
+        }
+
+        child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+
+        mMaxChildWidth = Math.max(mMaxChildWidth, child.getMeasuredWidth());
+        mMaxChildHeight = Math.max(mMaxChildHeight, child.getMeasuredHeight());
+    }
+
+    // Measure again for each child to be exactly the same size.
+
+    childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
+            mMaxChildWidth, MeasureSpec.EXACTLY);
+    childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
+            mMaxChildHeight, MeasureSpec.EXACTLY);
+
+    for (int i = 0; i &lt; count; i++) {
+        final View child = getChildAt(i);
+        if (child.getVisibility() == GONE) {
+            continue;
+        }
+
+        child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+    }
+
+    setMeasuredDimension(
+            resolveSize(mMaxChildWidth, widthMeasureSpec),
+            resolveSize(mMaxChildHeight, heightMeasureSpec));
+}
+
+@Override
+protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    int width = r - l;
+    int height = b - t;
+
+    final int count = getChildCount();
+
+    // Calculate the number of visible children.
+    int visibleCount = 0;
+    for (int i = 0; i &lt; count; i++) {
+        final View child = getChildAt(i);
+        if (child.getVisibility() == GONE) {
+            continue;
+        }
+        ++visibleCount;
+    }
+
+    if (visibleCount == 0) {
+        return;
+    }
+
+    // Calculate what number of rows and columns will optimize for even horizontal and
+    // vertical whitespace between items. Start with a 1 x N grid, then try 2 x N, and so on.
+    int bestSpaceDifference = Integer.MAX_VALUE;
+    int spaceDifference;
+
+    // Horizontal and vertical space between items
+    int hSpace = 0;
+    int vSpace = 0;
+
+    int cols = 1;
+    int rows;
+
+    while (true) {
+        rows = (visibleCount - 1) / cols + 1;
+
+        hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
+        vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+
+        spaceDifference = Math.abs(vSpace - hSpace);
+        if (rows * cols != visibleCount) {
+            spaceDifference *= UNEVEN_GRID_PENALTY_MULTIPLIER;
+        }
+
+        if (spaceDifference &lt; bestSpaceDifference) {
+            // Found a better whitespace squareness/ratio
+            bestSpaceDifference = spaceDifference;
+
+            // If we found a better whitespace squareness and there's only 1 row, this is
+            // the best we can do.
+            if (rows == 1) {
+                break;
+            }
+        } else {
+            // This is a worse whitespace ratio, use the previous value of cols and exit.
+            --cols;
+            rows = (visibleCount - 1) / cols + 1;
+            hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
+            vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+            break;
+        }
+
+        ++cols;
+    }
+
+    // Lay out children based on calculated best-fit number of rows and cols.
+
+    // If we chose a layout that has negative horizontal or vertical space, force it to zero.
+    hSpace = Math.max(0, hSpace);
+    vSpace = Math.max(0, vSpace);
+
+    // Re-use width/height variables to be child width/height.
+    width = (width - hSpace * (cols + 1)) / cols;
+    height = (height - vSpace * (rows + 1)) / rows;
+
+    int left, top;
+    int col, row;
+    int visibleIndex = 0;
+    for (int i = 0; i &lt; count; i++) {
+        final View child = getChildAt(i);
+        if (child.getVisibility() == GONE) {
+            continue;
+        }
+
+        row = visibleIndex / cols;
+        col = visibleIndex % cols;
+
+        left = hSpace * (col + 1) + width * col;
+        top = vSpace * (row + 1) + height * row;
+
+        child.layout(left, top,
+                (hSpace == 0 &amp;&amp; col == cols - 1) ? r : (left + width),
+                (vSpace == 0 &amp;&amp; row == rows - 1) ? b : (top + height));
+        ++visibleIndex;
+    }
+}
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android Http Client]]></title>
+    <link href="http://feicien.github.com/blog/2012/03/18/android-http-client/"/>
+    <updated>2012-03-18T21:13:00+08:00</updated>
+    <id>http://feicien.github.com/blog/2012/03/18/android-http-client</id>
+    <content type="html"><![CDATA[<p>大部分Android应用程序联网都是通过HTTP来发送和接受数据的。Android有2个Http客户端：HttpURLConnection和Apache Http Client.它们都支持Https,流媒体的上传下载，配置连接超时，ipv6和连接池。</p>
+
+<p>那么在我们的程序中选择哪一个好呢？</p>
+
+<p>通过Android的官方博客：<a href="http://android-developers.blogspot.com/2011/09/androids-http-clients.html">blogspot博客，需要翻墙</a> 如果你的应用api版本2.3及以上HttpURLConnection是更好的选择。</p>
+
+<p>下面通过代码来演示HttpURLConnection的使用。</p>
+
+<p>```
+//获取html源代码</p>
+
+<pre><code>public static String getHtml(String path) throws Exception {
+    URL url=new URL(path);
+    HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+
+    conn.setConnectTimeout(5000);
+    conn.setRequestMethod("GET");
+
+    if(conn.getResponseCode()==200){
+        InputStream is=conn.getInputStream();
+        byte[] data=read(is);
+        String html=new String(data,"UTF-8");
+        return html;
+    }
+    return null;
+}
+</code></pre>
+
+<p>```</p>
+
+<p>```</p>
+
+<p>//将输入流读到内存中</p>
+
+<pre><code>public static byte[] read(InputStream is) throws IOException {
+    ByteArrayOutputStream baos=new ByteArrayOutputStream();
+
+    byte[] buffer =new byte[1024];
+    int len=0;
+    while((len=is.read(buffer))!=-1){
+        baos.write(buffer, 0, len);
+    }
+    is.close();
+    return baos.toByteArray();
+}
+</code></pre>
+
+<p>```</p>
 ]]></content>
   </entry>
   
