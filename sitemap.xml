@@ -2,58 +2,62 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://feicien.github.com/blog/2011/11/27/android-textview-round/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/03/18/android-http-client/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/03/20/android-dashboard/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/04/10/create-android4.0-avd/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/04/20/start-hibernate4.1.2/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/04/26/ssh-from-tomcat-to-weblogic/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/05/08/java-tomcat-jdbc-datasource/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/11/27/android-push-gcm/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/12/19/weixin-java-api/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/12/22/weixin-push-message/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-13T10:25:13+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/2012/12/27/android-loader-demo/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://feicien.github.com/about/</loc>
+        <lastmod>2013-03-13T09:29:16+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/blog/archives/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-13T10:25:13+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-13T10:25:13+08:00</lastmod>
     </url>
     <url>
         <loc>http://feicien.github.com/robots.txt</loc>
-        <lastmod>2013-03-11T13:30:54+08:00</lastmod>
+        <lastmod>2013-03-11T13:35:27+08:00</lastmod>
     </url>
 </urlset>

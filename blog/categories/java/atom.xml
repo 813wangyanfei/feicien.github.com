@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | feicien的技术博客]]></title>
   <link href="http://feicien.github.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://feicien.github.com/"/>
-  <updated>2013-03-11T13:31:29+08:00</updated>
+  <updated>2013-03-13T10:26:00+08:00</updated>
   <id>http://feicien.github.com/</id>
   <author>
     <name><![CDATA[feicien]]></name>
@@ -18,108 +18,97 @@
     <link href="http://feicien.github.com/blog/2012/12/22/weixin-push-message/"/>
     <updated>2012-12-22T13:52:00+08:00</updated>
     <id>http://feicien.github.com/blog/2012/12/22/weixin-push-message</id>
-    <content type="html"><![CDATA[<p>在上一篇博客中介绍了JAVA实现微信公众账号的自定义消息回复，发到一个技术群中后，有网友问如何实现消息的主动推送？是的，现在微信的公共帐号官方api里并没有提供主动推送功能。</p>
-
-<p><strong>分析：</strong>既然微信公众平台上可以查询用户列表，可以给用户发送消息，就可以用程序模拟登录，获取到cookie和用户列表，然后主动群发功能，这样还可以解决每天群发的限制，不过这样是有风险的，可能会导致腾讯的封号，所以不要轻易使用。</p>
+    <content type="html"><![CDATA[<p><strong>2013年03月13日更新</strong>最近有博友反应说博客中的代码已经失效，今天有时间，我测试了一下，果然以前的代码不能使用了，于是我对本篇博客进行了大篇幅的修改。</p>
 
 <h3>下面是JAVA实现的原理：</h3>
 
-<ol>
-<li>获取cookie</li>
-</ol>
+<h4>1. 微信平台相关url:</h4>
 
+<p>```</p>
 
-<p>微信公众平台的登录验证地址：http://mp.weixin.qq.com/cgi-bin/login?lang=zh_CN</p>
+<p>public static String LOGIN_URL = "http://mp.weixin.qq.com/cgi-bin/login?lang=zh_CN";
+public static String INDEX_URL = "http://mp.weixin.qq.com/cgi-bin/indexpage?t=wxm-index&amp;lang=zh_CN";
+public static String FANS_URL = "http://mp.weixin.qq.com/cgi-bin/contactmanagepage?t=wxm-friend&amp;lang=zh_CN&amp;pagesize=10&amp;pageidx=0&amp;type=0&amp;groupid=0";
+public static String SEND_MSG = "http://mp.weixin.qq.com/cgi-bin/singlesend?t=ajax-response&amp;lang=zh_CN";</p>
 
-<p>请求方法：post</p>
+<p>```</p>
 
-<p>需要传递的参数：</p>
+<h4>2. 获取登录session</h4>
 
-<p>username：用户名</p>
+<p>```</p>
 
-<p>pwd1:密码的0到15位的MD5值，</p>
+<p>public static Map&lt;String, String> auth(String username, String password)
+throws IOException {map.put("username", username);
+map.put("pwd", MD5.getMD5(password.substring(0, 15).getBytes()).toUpperCase());</p>
 
-<p>pwd2:密码的MD5值</p>
+<pre><code>            map.put("f", "json");
+</code></pre>
 
-<p>f:json</p>
+<p>Response response = Jsoup.connect(LOGIN_URL).ignoreContentType(true).method(Method.POST).data(map).execute();</p>
 
-<p>请求这个地址会得到一个名称叫：mp_sid 的cookie
-在我测试的过程中发现光有这个这个cookie是不行的，还需要名称为pt2gguin，ts_uid，pgv_pvid，pgv_info=ssid，o_cookie，mp_user的cookie具体是在那里设置的，我也没有去深究。就直接从浏览器中把它们拷贝并拼接到mp_sid前。</p>
+<pre><code>            Map&lt;String, String&gt; cookies = response.cookies();
+</code></pre>
 
-<ol>
-<li>请求分组关注列表</li>
-</ol>
+<p>用户密码验证通过后，服务器跳转到首页
+response = Jsoup.connect(INDEX_URL).ignoreContentType(true).method(Method.POST).cookies(cookies).execute();</p>
 
-
-<p>请求地址：http://mp.weixin.qq.com/cgi-bin/contactmanagepage?t=wxm-friend&amp;lang=zh_CN&amp;pagesize=10&amp;pageidx=0&amp;type=0&amp;groupid=0
-pagesize=10</p>
-
-<p>每页显示的关注人数 可以设置大一些，比如1000
-groupid:分组id 0:未分组 1：黑名单 2：星标好友 如果你自己创建有好友，可以在浏览器地址栏看到分组的id</p>
-
-<p>```
-public static ListgetFans(SendHttpRequestter send,String sessionId) {</p>
-
-<pre><code>//获取html页面
-String fansHtml = send.sendPost(FANS_URL, null, sessionId);
-//解析json数据
-Matcher matcher = Pattern.compile("\\&amp;lt;script id=\"json-friendList\" type=\"json/text\"\\&amp;gt;(.*?)\\&amp;lt;/script\\&amp;gt;").matcher(fansHtml);
-
-String json = "";
-while (matcher.find()) {
-    json = matcher.group(1);
-}
-Gson gson = new Gson();
-return gson.fromJson(json, new TypeToken&amp;lt;List&amp;gt;() {}.getType());
+<pre><code>            return response.cookies();
 </code></pre>
 
 <p>}</p>
 
-<p>```
-WeiXinFans 类字段</p>
+<p>```</p>
+
+<h4>3. 获取关注列表</h4>
 
 <p>```</p>
 
-<pre><code>private String fakeId; //发送消息时使用到这个id
-private String nickName;//昵称
-private String remarkName;//备注名
-private int groupId;//分组id
-</code></pre>
+<p>public static List<WeiXinFans> getFans(Map&lt;String, String> cookie)throws IOException {
+Document document = Jsoup.connect(FANS_URL).cookies(cookie).post();
+Elements eles = document.select("#json-friendList");
+Element element = eles.get(0);
+String json = element.data();
+Gson gson = new Gson();
+return gson.fromJson(json, new TypeToken&lt;List<WeiXinFans>>() {}.getType());
+}</p>
 
 <p>```</p>
 
-<ol>
-<li>向指定的fakeId发送文字消息</li>
-</ol>
+<h4>4. 发送消息</h4>
 
+<p>```</p>
 
-<p>```
-static void sendMsg(SendHttpRequestter send, String sessionId, String content,String fakeId) {</p>
+<p>public static void sendMsg(Map&lt;String, String> cookie,
+String content,String fakeId) throws IOException {</p>
 
-<pre><code>HashMapmap = new HashMap();
-map.put("tofakeid", fakeId);//tofakeid 第二步中获取的id
-map.put("content", content);//要发送的内容
+<p>HashMap&lt;String, String> map = new HashMap&lt;String, String>();
+map.put("tofakeid", fakeId);
+map.put("content", content);
 map.put("error", "false");
 map.put("type", "1");
 map.put("ajax", "1");
+Document document = Jsoup.connect(SEND_MSG).data(map).cookies(cookie).post();
+Element body = document.body();
+System.out.println(body.text());
+}</p>
 
-String html = send.sendPost(SEND_MSG_URL, map, sessionId);
-System.out.println(html);
-</code></pre>
+<p>```</p>
 
-<p>}
-```
-发送地址SEND_MSG_URL：http://mp.weixin.qq.com/cgi-bin/singlesend?t=ajax-response&amp;lang=zh_CN</p>
+<h4>5. test</h4>
 
-<ol>
-<li>群发</li>
-</ol>
+<p>```</p>
 
+<p>public static void main(String[] args) throws IOException {
+Map&lt;String, String> cookie = auth("用户名", "密码");
+List<WeiXinFans> list = getFans(cookie);
+for (WeiXinFans fans : list) {
+sendMsg(cookie, "起床了没有", fans.getFakeId());
+}</p>
 
-<p>既然可以发送一条，使用一个for循环，不就可以群发了。</p>
+<p>}</p>
 
-<p><strong>结束语：</strong>SendHttpRequestter 这个类里面有个人信息，源码就不提供了，里面有2个方法。
-一个获取cookie的方法，一个发送post请求的方法，网上都可以找到的。</p>
+<p>```
+上面便是相关代码，其中使用到了Jsoup与Gson 2个jar包</p>
 ]]></content>
   </entry>
   
